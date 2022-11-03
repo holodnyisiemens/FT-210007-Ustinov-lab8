@@ -1,4 +1,18 @@
 import random # Подключение модуля для работы со случайной генерацией
+import logging
+
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+fh = logging.FileHandler('sample.log')
+fh.setLevel(logging.DEBUG)
+fh.setFormatter(formatter)
+logger.addHandler(fh)
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
+ch.setFormatter(formatter)
+logger.addHandler(ch)
+logger.debug('Запуск программы')
 
 while True: # Цикл обработки ввода целого числа
     try:
@@ -20,4 +34,9 @@ for j in range(n):
     numbers.remove(new_num) # Удаление из списка оставшихся возможных чисел
 
 print(f'\nСписок сгенерированных чисел: {rand_nums}')
-input('\nРабота программы завершена. Для выхода из консоли нажмите Enter ')
+
+try:
+    input('\nРабота программы завершена. Для выхода из консоли нажмите Enter ')
+    logging.info('Программа сработала успешно')
+except RuntimeError:
+    logging.error('Ошибка')
